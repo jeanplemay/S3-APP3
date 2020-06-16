@@ -1,5 +1,11 @@
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+/* **************************************************
+Noms : Jean-Philippe Lemay & Juan Manuel Gallego
+CIPs : lemj0601 & galj1704
+FICHIER : ServerThread.java
+DESCRIPTION : Thread pour le serveur
+ ************************************************** */
+
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -28,25 +34,26 @@ public class ServerThread extends Thread {
             try {
                 byte[] buf = new byte[256];
 
-                // receive request
+                // RÉCEPTION TRAME
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
 
                 String received = new String(packet.getData(), 0, packet.getLength());
-                System.out.println("Paquet reçu : " + received);
+                System.out.println("Trame reçue : " + received);
 
-                // FONCTION QUI CHANGE UN BIT POUR SIMULER UNE ERREUR
+                // FONCTION QUI CHANGE UN BIT POUR SIMULER UNE ERREUR (2e trame)
                 if(received.substring(32, 40).equals("00000010"))
                 {
                     int index = received.lastIndexOf('0');
                     received= received.substring(0,index)+'1'+received.substring(index+1);
                 }
 
+                // COUCHE LIAISON DE DONNÉES
                 received = liaison.liaisonDeDonneesToTransport(received);
-
                 paquets.add(received);
                 Collections.sort(paquets);
 
+                // VÉRIFIER SI LE PAQUET PRÉCÉDENT ÉTAIT MANQUANT
                 int dernierNum = Integer.parseInt(paquets.get(paquets.size()-1).substring(0,8),2);
                 int avantDenierNum = -1;
                 if(paquets.size()>1) avantDenierNum = Integer.parseInt(paquets.get(paquets.size()-2).substring(0,8),2);
@@ -54,7 +61,6 @@ public class ServerThread extends Thread {
                 if( dernierNum != avantDenierNum+1)
                 {
                     liaison.setPaquetsPerdus(liaison.getPaquetsPerdus()+1);
-
                     if(liaison.getPaquetsPerdus() >=3 )
                     {
                         throw new TransmissionErrorException();
@@ -65,7 +71,7 @@ public class ServerThread extends Thread {
                         manquant.insert(0, "0");
                     }
 
-                    // Paquet perdu
+                    // ENVOYER DEMANDE DE RETRANSMISSION
                     String dString2 = "00000000" + manquant.toString();
                     buf = dString2.getBytes();
                     InetAddress address2 = packet.getAddress();
@@ -75,7 +81,7 @@ public class ServerThread extends Thread {
                 }
                 else
                 {
-                    // ACK
+                    // ENVOYER ACK
                     String dString = "11111111" + received.substring(0,8);
                     buf = dString.getBytes();
                     InetAddress address = packet.getAddress();
@@ -84,7 +90,7 @@ public class ServerThread extends Thread {
                     socket.send(packet);
                 }
 
-                // FIN DE LA RÉCEPTION
+                // FIN DE LA RÉCEPTION (COUCHE TRANSPORT)
                 if(paquets.size()-1 == Integer.parseInt(paquets.get(0).substring(9,16),2) )
                 {
                     String retour[] = transport.transportFromApplication(paquets);
@@ -105,9 +111,7 @@ public class ServerThread extends Thread {
             } catch (IOException | TransmissionErrorException e) {
                 run = false;
                 e.printStackTrace();
-
             }
         }
     }
-
 }

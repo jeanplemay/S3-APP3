@@ -1,7 +1,13 @@
+/* **************************************************
+Noms : Jean-Philippe Lemay & Juan Manuel Gallego
+CIPs : lemj0601 & galj1704
+FICHIER : LiaisonDeDonnees.java
+DESCRIPTION : Classe de la couche de liaison de donnees
+ ************************************************** */
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.zip.CRC32;
 

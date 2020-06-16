@@ -1,3 +1,10 @@
+/* **************************************************
+Noms : Jean-Philippe Lemay & Juan Manuel Gallego
+CIPs : lemj0601 & galj1704
+FICHIER : Transport.java
+DESCRIPTION : Classe de la couche de transport
+ ************************************************** */
+
 import java.util.ArrayList;
 
 public class Transport
@@ -36,8 +43,6 @@ public class Transport
                 num.insert(0, "0");
             }
             trames.add(num.toString() + taille + paquets.get(i));
-
-            System.out.println(trames.get(i));
         }
         return trames;
     }
