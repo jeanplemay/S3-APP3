@@ -11,6 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.zip.CRC32;
 
+/**
+ * Couche lisaison de données
+ */
 public class LiaisonDeDonnees
 {
     private String trame;
@@ -19,6 +22,9 @@ public class LiaisonDeDonnees
     private int paquetsPerdus;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
+    /**
+     * Constructeur par défaut
+     */
     public LiaisonDeDonnees()
     {
         this.trame="";
@@ -27,6 +33,11 @@ public class LiaisonDeDonnees
         paquetsPerdus = 0;
     }
 
+    /**
+     * Couche Transport vers couche Liaison de données
+     * @param trameRecue Trame reçue de la couche transport
+     * @return Trame générée par la couche liaison de données
+     */
     public String liaisonDeDonneesFromTransport(String trameRecue)
     {
         this.trame = trameRecue;
@@ -44,6 +55,11 @@ public class LiaisonDeDonnees
         return trame;
     }
 
+    /**
+     * Couche Liaison de données vers couche Transport
+     * @param trameRecue Trame de la couche liaison de données
+     * @return Trame générée pour la couche transport
+     */
     public String liaisonDeDonneesToTransport(String trameRecue)
     {
         try {
@@ -82,11 +98,19 @@ public class LiaisonDeDonnees
         return trame;
     }
 
+    /**
+     *
+     * @return Nombre de paquets perdus
+     */
     public int getPaquetsPerdus()
     {
         return paquetsPerdus;
     }
 
+    /**
+     *
+     * @param paquetsPerdus Nombre de paquets perdus
+     */
     public void setPaquetsPerdus(int paquetsPerdus)
     {
         this.paquetsPerdus = paquetsPerdus;

@@ -10,6 +10,9 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+/**
+ * Thread du serveur
+ */
 public class ServerThread extends Thread {
 
     protected DatagramSocket socket = null;
@@ -20,15 +23,27 @@ public class ServerThread extends Thread {
 
     private boolean generateError = true;
 
+    /**
+     *
+     * @throws IOException Exception
+     */
     public ServerThread() throws IOException {
         this("ServerThread");
     }
 
+    /**
+     *
+     * @param name Nom du thread
+     * @throws IOException Exception
+     */
     public ServerThread(String name) throws IOException {
         super(name);
         socket = new DatagramSocket(25555);
     }
 
+    /**
+     * Fonction run du thread
+     */
     public void run() {
 
         paquets = new ArrayList<String>();
@@ -99,7 +114,7 @@ public class ServerThread extends Thread {
                     // FIN DE LA RÉCEPTION (COUCHE TRANSPORT)
                     if(paquets.size()-1 == Integer.parseInt(paquets.get(0).substring(9,16),2) )
                     {
-                        String retour[] = transport.transportFromApplication(paquets);
+                        String retour[] = transport.transportToApplication(paquets);
                         try {
                             FileWriter writer = new FileWriter(retour[0]);
                             String text = retour[1];

@@ -5,7 +5,9 @@ FICHIER : TransmissionErrorException.java
 DESCRIPTION : Erreur lors de la transmission (trois paquets manquants)
  ************************************************** */
 
-
+/**
+ * Erreur lors de la transmission
+ */
 public class TransmissionErrorException extends Exception
 {
 

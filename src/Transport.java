@@ -7,8 +7,17 @@ DESCRIPTION : Classe de la couche de transport
 
 import java.util.ArrayList;
 
+/**
+ * Couche transport
+ */
 public class Transport
 {
+    /**
+     * Couche Application vers couche Transport
+     * @param fileName Nom du fichier
+     * @param fileContent Contenu du fichier
+     * @return Array liste des trames à envoyer
+     */
     public ArrayList<String> transportFromApplication(String fileName, String fileContent)
     {
         ArrayList<String> paquets = new ArrayList<String>();
@@ -47,7 +56,12 @@ public class Transport
         return trames;
     }
 
-    public String[] transportFromApplication(ArrayList<String> paquets)
+    /**
+     * Couche Transport vers couche Application
+     * @param paquets Array liste des trames
+     * @return Tableau de 2 String. Index 0 : nom du fichier, Index 1 : Contenu du fichier
+     */
+    public String[] transportToApplication(ArrayList<String> paquets)
     {
         String fileName = paquets.get(0).substring(16);
         String fileContent="";

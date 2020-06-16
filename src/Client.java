@@ -8,7 +8,15 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+/**
+ * Programme Client
+ */
 public class Client {
+    /**
+     * Fonction main du client
+     * @param args Arguments de l'application
+     * @throws IOException Exception
+     */
     public static void main(String[] args) throws IOException {
 
         ArrayList<String> trames = new ArrayList<String>();
