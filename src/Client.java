@@ -48,13 +48,13 @@ public class Client {
             InetAddress address = InetAddress.getByName(serverIP);
 
             for(int i =0; i < trames.size(); i++)
-            if( i !=2 && i !=5 && i !=8) {// Utiliser pour simuler retransmissison de paquets
+            //if( i !=2 && i !=5 && i !=8) {// Utiliser pour simuler retransmissison de paquets
             {
                 buf = trames.get(i).getBytes();
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25555);
                 socket.send(packet);
 
-                // RÉPONSE (ACK OU DEMANDE DE RETRANSMISSION
+                // RÉPONSE (ACK OU DEMANDE DE RETRANSMISSION)
                 packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
                 String received = new String(packet.getData(), 0, packet.getLength());
@@ -68,7 +68,7 @@ public class Client {
                     DatagramPacket packet2 = new DatagramPacket(buf, buf.length, address, 25555);
                     socket.send(packet2);
                 }
-            }
+            //}
             }
             socket.close();
 

@@ -44,7 +44,6 @@ public class LiaisonDeDonnees
         return trame;
     }
 
-
     public String liaisonDeDonneesToTransport(String trameRecue)
     {
         try {
@@ -78,6 +77,7 @@ public class LiaisonDeDonnees
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            return null;
         }
         return trame;
     }
